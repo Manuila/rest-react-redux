@@ -11,7 +11,7 @@ import {
  * @param {number} page
  * */
 export const GET_POSTS = 'posts:GET_POSTS';
-export const getPosts = (limit, page) => (dispatch) => {
+export const getPosts = (limit, page) => dispatch => {
   fetchPosts(limit, page)
     .then(res => dispatch({
       type: GET_POSTS,
@@ -23,7 +23,7 @@ export const getPosts = (limit, page) => (dispatch) => {
  * @param {string} postId
  * */
 export const DELETE_POST = 'posts:DELETE_POST';
-export const deletePost = postId => (dispatch) => {
+export const deletePost = postId => dispatch => {
   fetchDeletePost(postId)
     .then(() => dispatch({
       type: DELETE_POST,
@@ -35,7 +35,7 @@ export const deletePost = postId => (dispatch) => {
  * @param {Object} post
  * */
 export const ADD_POST = 'posts:ADD_POST';
-export const addPost = post => (dispatch) => {
+export const addPost = post => dispatch => {
   fetchAddPost(post)
     .then(res => dispatch({
       type: ADD_POST,
@@ -47,7 +47,7 @@ export const addPost = post => (dispatch) => {
  * @param {Immutable.Map} post
  * */
 export const UPDATE_POST = 'posts:UPDATE_POST';
-export const updatePost = post => (dispatch) => {
+export const updatePost = post => dispatch => {
   fetchUpdatePost(post)
     .then(() => dispatch({
       type: UPDATE_POST,
