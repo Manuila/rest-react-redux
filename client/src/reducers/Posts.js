@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import * as types from '../actions/actionTypes';
+import * as POSTS_ACTION_TYPES from '../actions/posts';
 
 const initialState = fromJS({
   posts: [],
@@ -7,25 +7,26 @@ const initialState = fromJS({
 
 const postReducer = (state = initialState, action) => {
   let newState = state;
+  
   switch (action.type) {
-    case types.GET_POSTS: {
-      if (state.get('posts').count() === 0) {
-        return state.set('posts', fromJS(action.posts));
+    case POSTS_ACTION_TYPES.GET_POSTS: {
+      if (newState.get('posts').count() === 0) {
+        return newState.set('posts', fromJS(action.posts));
       }
-      return state.update('posts', posts =>
+      return newState.update('posts', posts =>
         posts.concat(fromJS(action.posts)));
     }
-    case types.ADD_POST: {
-      return state.update('posts', posts =>
+    case POSTS_ACTION_TYPES.ADD_POST: {
+      return newState.update('posts', posts =>
         posts.unshift(fromJS(action.post)));
     }
-    case types.DELETE_POST: {
-      return state.update('posts', posts =>
+    case POSTS_ACTION_TYPES.DELETE_POST: {
+      return newState.update('posts', posts =>
         posts.filter(post =>
           post.get('_id') !== action.postId));
     }
-    case types.UPDATE_POST: {
-      return state.update('posts', (posts) => {
+    case POSTS_ACTION_TYPES.UPDATE_POST: {
+      return newState.update('posts', (posts) => {
         const index = posts.findIndex(post =>
           post.get('_id') === action.post.get('_id'));
         return posts.set(index, action.post);
@@ -36,4 +37,5 @@ const postReducer = (state = initialState, action) => {
   }
   return newState;
 };
+
 export default postReducer;

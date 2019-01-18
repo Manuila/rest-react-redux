@@ -1,8 +1,10 @@
 import React, { PureComponent, createRef, Fragment } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import PopupWindow from '../../../common/Modal/PopupWindow';
-import { addPost } from '../../../api/posts';
+
+import { addPost } from '../../../actions/posts';
 
 import Overlay from '../../../common/Overlay/Overlay';
 import Spinner from '../../../common/Spinner/Spinner';
@@ -10,9 +12,10 @@ import Spinner from '../../../common/Spinner/Spinner';
 import './form-add.scss';
 
 
-export default class FormAdd extends PureComponent {
+class FormAdd extends PureComponent {
   static propTypes = {
     toggleIsOpen: PropTypes.func.isRequired,
+    dispatchAddPost: PropTypes.func.isRequired,
   };
 
   state = {
@@ -33,12 +36,12 @@ export default class FormAdd extends PureComponent {
   toggleIsLoading = isLoading => this.setState({ isLoading });
 
   addPost = async () => {
-    const { toggleIsOpen } = this.props;
+    const { toggleIsOpen, dispatchAddPost } = this.props;
     const title = this.titleInput.current.value;
     const description = this.descriptionInput.current.value;
     this.toggleIsLoading(true);
     try {
-      await addPost({
+      await dispatchAddPost({
         title,
         description,
       });
@@ -53,7 +56,8 @@ export default class FormAdd extends PureComponent {
   onSubmit = (e) => {
     e.preventDefault();
     this.addPost();
-  }
+  };
+
   render() {
     const { toggleIsOpen } = this.props;
     const { isLoading } = this.state;
@@ -102,3 +106,9 @@ export default class FormAdd extends PureComponent {
     );
   }
 }
+
+const mapDispatchToProps = {
+  dispatchAddPost: addPost,
+};
+
+export default connect(null, mapDispatchToProps)(FormAdd);

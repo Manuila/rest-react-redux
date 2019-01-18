@@ -50,7 +50,7 @@ class PostsList extends PureComponent {
         <div className="todo-component__posts-table">
           {
             posts.count()
-              ?
+              ? (
                 <div>
                   <table className="table-posts">
                     <thead className="table-posts__head">
@@ -62,7 +62,7 @@ class PostsList extends PureComponent {
                           >
                             {title}
                           </th>
-                    ))}
+                        ))}
                       </tr>
                     </thead>
                     <tbody className="table-posts__body">
@@ -90,12 +90,13 @@ class PostsList extends PureComponent {
                       onClick={this.onUpdating}
                       spin={isUpdating}
                     >
-                      Загрузить ещё
+
+                     More...
                     </Button>
                   </div>
                 </div>
-              :
-                <div className="no-posts">No posts</div>
+              )
+              : <div className="no-posts">No posts</div>
           }
         </div>
       </article>

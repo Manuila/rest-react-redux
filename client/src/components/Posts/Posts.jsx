@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
-import { getPosts, updatePost } from '../../api/posts/';
+import { getPosts, updatePost } from '../../actions/posts';
 import PostsList from './__list/PostsList';
 import PostHeader from './__header/PostHeader';
 import { DEFAULT_POSTS_COUNT } from './posts.costants';
@@ -29,9 +29,10 @@ class Posts extends Component {
 
   fetchPosts = async () => {
     const { page } = this.state;
+    const { dispatchGetPosts } = this.props;
     this.toggleArePostsLoading(true);
     try {
-      await getPosts(DEFAULT_POSTS_COUNT, page);
+      await dispatchGetPosts(DEFAULT_POSTS_COUNT, page);
       this.setState({ page: page + 1 });
     } catch (e) {
       throw e;
@@ -44,8 +45,9 @@ class Posts extends Component {
    * @param {Immutable.Map} post
    * */
   updatePost = async (post) => {
+    const { dispatchUpdatePost } = this.props;
     try {
-      await updatePost(post);
+      await dispatchUpdatePost(post);
     } catch (e) {
       throw e;
     }
@@ -87,26 +89,35 @@ class Posts extends Component {
           <PostHeader onPostAdd={this.addPost} />
           {
             arePostsLoading
-              ?
-                <Spinner />
-              :
+              ? <Spinner />
+              : (
                 <PostsList
                   posts={posts}
                   onPostLiked={this.handlePostLiked}
                   onPostPublished={this.handlePostPublished}
                   refreshPosts={this.refreshPosts}
                 />
+              )
             }
         </div>
       </article>
     );
   }
 }
+
 Posts.propTypes = {
   posts: PropTypes.instanceOf(List).isRequired,
+  dispatchUpdatePost: PropTypes.func.isRequired,
+  dispatchGetPosts: PropTypes.func.isRequired,
 };
+
 const mapStateToProps = state => ({
   posts: getAllPosts(state),
 });
 
-export default connect(mapStateToProps)(Posts);
+const mapDispatchToProps = {
+  dispatchGetPosts: getPosts,
+  dispatchUpdatePost: updatePost,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

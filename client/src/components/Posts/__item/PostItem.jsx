@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
-import { deletePost } from '../../../api/posts/index';
+import { deletePost } from '../../../actions/posts';
+
 import CellWithStateModalDelete from '../containers/CellWithStateModalDelete';
 import CellWithStateModalEdit from '../containers/CellWithStateModalEdit';
 import Button from '../../../common/Button/Button';
+
 
 class Post extends PureComponent {
   static propTypes = {
@@ -20,6 +22,7 @@ class Post extends PureComponent {
     onPostPublished: PropTypes.func.isRequired,
     isLiked: PropTypes.bool.isRequired,
     onPostLiked: PropTypes.func.isRequired,
+    dispatchDeletePost: PropTypes.func.isRequired,
   };
 
   render() {
@@ -33,6 +36,7 @@ class Post extends PureComponent {
       onPostPublished,
       isLiked,
       onPostLiked,
+      dispatchDeletePost,
     } = this.props;
     return (
       <tr className="table-posts__row table__row-body">
@@ -66,7 +70,7 @@ class Post extends PureComponent {
         </td>
         <CellWithStateModalDelete
           id={id}
-          deleteAction={deletePost}
+          deleteItem={dispatchDeletePost}
         />
         <CellWithStateModalEdit
           id={id}
@@ -75,4 +79,9 @@ class Post extends PureComponent {
     );
   }
 }
-export default Post;
+
+const mapDispatchToProps = {
+  dispatchDeletePost: deletePost,
+};
+
+export default connect(null, mapDispatchToProps)(Post);
