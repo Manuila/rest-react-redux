@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from '../Title/Title';
 
-import './header.scss';
-
-
-const Header = ({ label }) => (
-  <header className="page__header">
-    <Title label={label} />
+const Header = ({ children, className }) => (
+  <header className={className}>
+    { children }
   </header>
 );
 
 Header.propTypes = {
-  label: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+  ]).isRequired,
+  className: PropTypes.string,
+};
+
+Header.defaultProps = {
+  className: '',
 };
 
 export default Header;

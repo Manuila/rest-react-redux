@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './footer.scss';
-
-
-const Footer = ({ children }) => (
-  <footer className="page__footer">
-    {children}
+const Footer = ({ children, className }) => (
+  <footer className={className}>
+    { children }
   </footer>
 );
 
@@ -15,6 +12,11 @@ Footer.propTypes = {
     PropTypes.element,
     PropTypes.string,
   ]).isRequired,
+  className: PropTypes.string,
+};
+
+Footer.defaultProps = {
+  className: '',
 };
 
 export default Footer;
