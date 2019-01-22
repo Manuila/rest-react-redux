@@ -5,18 +5,9 @@ import { List } from 'immutable';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import Post from '../__item/PostItem';
 import Button from '../../../common/Button/Button';
-
+import TABLE_TITLE from './constants';
 
 /* eslint-disable react/no-array-index-key */
-const TABLE_TITLE = [
-  '#',
-  'Title',
-  'Description',
-  'Creation Date',
-  'Publish',
-  'Like',
-  'Action',
-];
 class PostsList extends PureComponent {
   state = { isUpdating: false };
 
@@ -90,8 +81,7 @@ class PostsList extends PureComponent {
                       onClick={this.onUpdating}
                       spin={isUpdating}
                     >
-
-                     More...
+                      More...
                     </Button>
                   </div>
                 </div>
