@@ -86,7 +86,7 @@ class Posts extends Component {
     return (
       <article className="todo-component">
         <div className="todo-component__wrapper">
-          <PostHeader onPostAdd={this.addPost} />
+          <PostHeader />
           {
             arePostsLoading
               ? <Spinner />
