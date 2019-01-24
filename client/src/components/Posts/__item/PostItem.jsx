@@ -49,7 +49,7 @@ const Post = ({
         className="button-like"
         onClick={onPostLiked}
         iconId={faThumbsUp}
-        IconClassName={classNames('icon-like', { 'icon-like_active': isLiked })}
+        iconClassName={classNames('icon-like', { 'icon-like_active': isLiked })}
       />
     </td>
     <CellWithButtonDelete

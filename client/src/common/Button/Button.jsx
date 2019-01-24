@@ -14,7 +14,7 @@ const Button = forwardRef((
     type,
     children,
     iconId,
-    IconClassName,
+    iconClassName,
     ...props
   }
   , ref,
@@ -27,7 +27,7 @@ const Button = forwardRef((
     disabled={disabled}
   >
     {iconId && (
-      <div className={classNames('button-icon', IconClassName)}>
+      <div className={classNames('button-icon', iconClassName)}>
         <FontAwesomeIcon
           icon={iconId}
           {...props}
@@ -47,7 +47,7 @@ Button.propTypes = {
     PropTypes.instanceOf(React.Component),
     PropTypes.node,
   ]),
-  IconClassName: PropTypes.string,
+  iconClassName: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -56,7 +56,7 @@ Button.defaultProps = {
   disabled: false,
   onClick: null,
   type: BUTTON_TYPES.BUTTON,
-  IconClassName: null,
+  iconClassName: null,
 };
 
 export default Button;
