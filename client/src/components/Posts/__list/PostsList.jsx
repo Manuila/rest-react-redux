@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import { List } from 'immutable';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+
+import { DEFAULT_POSTS_COUNT } from '../posts.costants';
+import TABLE_TITLE from './constants';
 import Post from '../__item/PostItem';
 import Button from '../../../common/Button/Button';
-import TABLE_TITLE from './constants';
+
 
 /* eslint-disable react/no-array-index-key */
 class PostsList extends PureComponent {
@@ -36,11 +39,13 @@ class PostsList extends PureComponent {
 
     const { isUpdating } = this.state;
 
+    const postsCount = posts.count();
+
     return (
       <article className="todo-component__posts">
         <div className="todo-component__posts-table">
           {
-            posts.count()
+            postsCount
               ? (
                 <div>
                   <table className="table-posts">
@@ -74,16 +79,21 @@ class PostsList extends PureComponent {
                     ))}
                     </tbody>
                   </table>
-                  <div className="table-posts__button">
-                    <Button
-                      className="button-save"
-                      iconId={faSyncAlt}
-                      onClick={this.onUpdating}
-                      spin={isUpdating}
-                    >
-                      More...
-                    </Button>
-                  </div>
+                  {
+                    postsCount > DEFAULT_POSTS_COUNT
+                    && (
+                    <div className="table-posts__button">
+                      <Button
+                        className="button-save"
+                        iconId={faSyncAlt}
+                        onClick={this.onUpdating}
+                        spin={isUpdating}
+                      >
+                        More...
+                      </Button>
+                    </div>
+                    )
+                  }
                 </div>
               )
               : <div className="no-posts">No posts</div>
@@ -93,6 +103,7 @@ class PostsList extends PureComponent {
     );
   }
 }
+
 PostsList.propTypes = {
   posts: PropTypes.instanceOf(List).isRequired,
   onPostLiked: PropTypes.func.isRequired,

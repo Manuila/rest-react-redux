@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+
 import Button from '../../../common/Button/Button';
 import PopupWindow from '../../../common/Modal/PopupWindow';
 import ModalStateContainer from '../../../common/Modal/containers/ModalStateContainer';
 
 
-class CellWithStateModalDelete extends PureComponent {
+class CellWithButtonDelete extends PureComponent {
   delete = async () => {
     const { id, deleteItem, toggleIsOpenModal } = this.props;
     try {
@@ -46,10 +47,11 @@ class CellWithStateModalDelete extends PureComponent {
   }
 }
 
-CellWithStateModalDelete.propTypes = {
+CellWithButtonDelete.propTypes = {
   id: PropTypes.string.isRequired,
   deleteItem: PropTypes.func.isRequired,
   toggleIsOpenModal: PropTypes.func.isRequired,
   isOpenModal: PropTypes.bool.isRequired,
 };
-export default ModalStateContainer(CellWithStateModalDelete);
+
+export default ModalStateContainer(CellWithButtonDelete);

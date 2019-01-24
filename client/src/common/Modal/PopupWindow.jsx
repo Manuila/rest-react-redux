@@ -24,12 +24,15 @@ class PopupWindow extends Component {
       PropTypes.node,
     ]),
   };
+
   static defaultProps = {
     className: '',
     title: '',
     hasCloseIcon: false,
     children: null,
   };
+
+  modal = createRef();
 
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyUp, false);
@@ -41,14 +44,11 @@ class PopupWindow extends Component {
     document.removeEventListener('click', this.handleOutsideClick, false);
   }
 
-  modal = createRef();
-
   handleKeyUp = (e) => {
     const { secondaryButtonAction } = this.props;
     const keys = {
       27: () => {
         e.preventDefault();
-        // onCloseRequest();
         secondaryButtonAction();
         window.removeEventListener('keyup', this.handleKeyUp, false);
       },

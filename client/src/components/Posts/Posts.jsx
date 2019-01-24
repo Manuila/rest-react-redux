@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
+
+import { DEFAULT_POSTS_COUNT } from './posts.costants';
 import { getPosts, updatePost } from '../../actions/posts';
+import { getAllPosts } from '../../selectors/posts';
 import PostsList from './__list/PostsList';
 import PostHeader from './__header/PostHeader';
-import { DEFAULT_POSTS_COUNT } from './posts.costants';
 import Spinner from '../../common/Spinner/Spinner';
-import { getAllPosts } from '../../selectors/posts';
 
 import './posts.scss';
 
@@ -86,7 +87,7 @@ class Posts extends Component {
     return (
       <article className="todo-component">
         <div className="todo-component__wrapper">
-          <PostHeader />
+          <PostHeader label="posts" />
           {
             arePostsLoading
               ? <Spinner />
