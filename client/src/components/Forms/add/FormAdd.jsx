@@ -1,4 +1,4 @@
-import React, { PureComponent, createRef, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -20,15 +20,27 @@ class FormAdd extends PureComponent {
 
   state = {
     isLoading: false,
+    titleValue: '',
+    descriptionValue: '',
   };
 
-  titleInput = createRef();
-
-  descriptionInput = createRef();
-
   componentDidMount() {
-    if (this.titleInput) this.titleInput.current.focus();
+    if (this.titleInput) this.titleInput.focus();
   }
+
+  /**
+   * @param {Event} event
+   */
+  handleTitleValueChange = (event) => {
+    this.setState({ titleValue: event.target.value });
+  };
+
+  /**
+   * @param {Event} event
+   */
+  handleDescriptionValueChange = (event) => {
+    this.setState({ descriptionValue: event.target.value });
+  };
 
   /**
    * @param {boolean} isLoading
@@ -37,13 +49,12 @@ class FormAdd extends PureComponent {
 
   addPost = async () => {
     const { toggleIsOpen, dispatchAddPost } = this.props;
-    const title = this.titleInput.current.value;
-    const description = this.descriptionInput.current.value;
+    const { titleValue, descriptionValue } = this.state;
     this.toggleIsLoading(true);
     try {
       await dispatchAddPost({
-        title,
-        description,
+        titleValue,
+        descriptionValue,
       });
     } catch (e) {
       throw e;
@@ -53,24 +64,28 @@ class FormAdd extends PureComponent {
     }
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
+  /**
+   * @param {Event} event
+   */
+  onSubmit = (event) => {
+    event.preventDefault();
     this.addPost();
   };
 
   render() {
     const { toggleIsOpen } = this.props;
-    const { isLoading } = this.state;
+    const { isLoading, titleValue, descriptionValue } = this.state;
     return (
       <Fragment>
-        {isLoading
-          ?
+        { isLoading
+          ? (
             <Overlay
               active
             >
               <Spinner />
             </Overlay>
-          :
+          )
+          : (
             <PopupWindow
               className="modal-modal"
               title="Add post"
@@ -83,8 +98,10 @@ class FormAdd extends PureComponent {
               <form className="form-add" onSubmit={this.onSubmit}>
                 <div className="form-add__row">
                   <input
+                    value={titleValue}
+                    onChange={this.handleTitleValueChange}
+                    ref={(input) => { this.titleInput = input; }}
                     className="form-add-input"
-                    ref={this.titleInput}
                     placeholder="title"
                     required
                     aria-required="true"
@@ -92,6 +109,8 @@ class FormAdd extends PureComponent {
                 </div>
                 <div className="form-add__row">
                   <textarea
+                    value={descriptionValue}
+                    onChange={this.handleDescriptionValueChange}
                     className="form-add-textarea"
                     rows="5"
                     name="text"
@@ -101,6 +120,7 @@ class FormAdd extends PureComponent {
                 </div>
               </form>
             </PopupWindow>
+          )
         }
       </Fragment>
     );
