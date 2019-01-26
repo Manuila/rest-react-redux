@@ -116,7 +116,6 @@ class FormEdit extends PureComponent {
               <form className="form-edit" onSubmit={this.onSubmit}>
                 <div className="form-edit__row">
                   <input
-                    value={titleValue}
                     onChange={this.handleTitleValueChange}
                     ref={(input) => { this.titleInput = input; }}
                     required
@@ -126,7 +125,6 @@ class FormEdit extends PureComponent {
                 </div>
                 <div className="form-edit__row">
                   <textarea
-                    value={descriptionValue}
                     onChange={this.handleDescriptionValueChange}
                     className="form-edit-textarea"
                     rows="5"
